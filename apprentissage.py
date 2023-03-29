@@ -51,4 +51,4 @@ plt.title("model accuracy")
 plt.ylabel("Accuracy")
 plt.xlabel("Epoch")
 plt.legend(["Accuracy","Validation Accuracy","Loss","Validation Loss"])
-plt.show
+plt.show()

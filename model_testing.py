@@ -1,19 +1,31 @@
+from keras.applications.vgg16 import preprocess_input
+from keras.preprocessing.image import ImageDataGenerator
 from tensorflow import keras
 import keras.utils as image
 from keras.models import load_model
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Load image
-img_test = image.load_img('C:/Users/annie/Documents/GitHub/TP3-VATI/test/ace of clubs/005.jpg',target_size=(150,150))
-img_test = np.asarray(img_test)
-plt.imshow(img_test)
-img_test = np.expand_dims(img_test,axis=0)
+test_data = ImageDataGenerator(rescale=1./255)
+validation_data = test_data.flow_from_directory(directory=r'C:\Users\annie\Documents\GitHub\TP3-VATI\test',target_size=(150,150))
+label_mapping = dict([(v, k) for k, v in validation_data.class_indices.items()]) # on associe chaque id à un label
 
-# Utiliser model # ça ne marche pas encore
-saved_model = load_model(r'vggclf.h5')
-output = saved_model.predict(img_test)
-if(output[0][0]>output[0][1]):
-    print("ace of clubs")
-else:
-    print("not ace of clubs")
+# Load image test
+test_image_path = 'C:/Users/annie/Documents/GitHub/TP3-VATI/test/'
+img_test = image.load_img('C:/Users/annie/Documents/GitHub/TP3-VATI/test/eight of spades/019.jpg',target_size=(150,150)) # changer l'image ici
+img_arr = image.img_to_array(img_test)/255.0
+img_input = img_arr.reshape((1, img_arr.shape[0], img_arr.shape[1], img_arr.shape[2]))
+
+# Charger model
+saved_model = load_model('./vggclf.h5')
+saved_model.summary()
+
+# on ne peut pas utiliser decode predictions car ce n'est pas un pre-trained model
+# p = decode_predictions(features)
+
+# Prédiction
+prediction_id = saved_model.predict(img_input)
+prediction_id = np.argmax(prediction_id,axis=1)
+prediction_label = label_mapping[int(prediction_id)]
+
+print(prediction_label)

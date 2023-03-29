@@ -5,12 +5,12 @@ from sklearn.model_selection import train_test_split
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 # Define the path to the dataset directory
-dataset_dir = r'D:\ISEN\TP3\Dataset'
+dataset_dir = r'C:\Users\annie\Documents\GitHub\TP3-VATI\Dataset' # TODO : changer en chemin relatif
 
 # Define the path to the output directories for training, validation, and test data
-train_dir = r'D:\ISEN\TP3\train'
-valid_dir = r'D:\ISEN\TP3\validation'
-test_dir = r'D:\ISEN\TP3\test'
+train_dir = r'C:\Users\annie\Documents\GitHub\TP3-VATI\train' # TODO : changer en chemin relatif
+valid_dir = r'C:\Users\annie\Documents\GitHub\TP3-VATI\validation' # TODO : changer en chemin relatif
+test_dir = r'C:\Users\annie\Documents\GitHub\TP3-VATI\test' # TODO : changer en chemin relatif
 
 # Create the output directories if they don't exist
 os.makedirs(train_dir, exist_ok=True)
