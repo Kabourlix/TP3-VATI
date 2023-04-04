@@ -21,20 +21,31 @@ train_data = tr_data.flow_from_directory(directory="./train",target_size=(150,15
 vd_data = ImageDataGenerator(rescale=1./255)
 validation_data = vd_data.flow_from_directory(directory="./validation",target_size=(150,150))
 
-# VGG : modèle pré-entrainé
-VGG = keras.applications.VGG16(input_shape=(150,150,3),include_top=False,weights='imagenet')
-VGG.trainable = False
+# Initialisation modèle
+model = Sequential()
 
-# Construire notre VGG
-model = Flatten()(VGG.output)
-model = Dense(512,activation="relu")(model)
-model = Dropout(0.2)(model)
-model = Dense(512,activation="relu")(model)
-model = Dropout(0.2)(model)
-model = Dense(53,activation="softmax")(model)
+# Construire notre modèle de la même façon que notre VGG
+# voir summary de model_vgg
+# 1 On essaie d'imiter le modèle VGG pré-entrainé (edit : impossible sinon c'est 30min par epoch)
+model.add(Conv2D(filters=32, kernel_size=3, padding="same",activation="relu",input_shape=(150,150,3)))
+model.add(Conv2D(filters=32, kernel_size=3, padding="same",activation="relu"))
+model.add(MaxPool2D())
+model.add(Conv2D(filters=64, kernel_size=3, padding="same",activation="relu"))
+model.add(Conv2D(filters=64, kernel_size=3, padding="same",activation="relu"))
+model.add(MaxPool2D())
+model.add(Conv2D(filters=128, kernel_size=3, padding="same",activation="relu"))
+model.add(Conv2D(filters=128, kernel_size=3, padding="same",activation="relu"))
+model.add(MaxPool2D())
+model.add(MaxPool2D())
+# 2 Même chose que pour VGG
+model.add(Flatten())
+model.add(Dense(512,activation="relu"))
+model.add(Dropout(0.2))
+model.add(Dense(512,activation="relu"))
+model.add(Dropout(0.2))
+model.add(Dense(53,activation="softmax"))
 
-# Créer modèle et afficher summary
-model = Model(inputs=VGG.input, outputs=model)
+# Afficher summary
 model.summary()
 
 # Compiler modèle
@@ -45,7 +56,7 @@ early_stop=keras.callbacks.EarlyStopping(patience=5)
 hist = model.fit(train_data,epochs=15,validation_data=validation_data,verbose=1,validation_steps=3,callbacks=early_stop)
 
 # Sauvegarder modèle
-model.save('./vggV2.h5')
+model.save('./cnnV1.h5')
 
 # Visualisation
 plt.style.use('ggplot')

@@ -45,7 +45,7 @@ for i in range(len(X_test)):
 custom_objects = {'custom_optimizer': adam}
 
 # Load the model with the custom_objects argument
-saved_model = load_model('vggclf.h5', custom_objects=custom_objects)
+saved_model = load_model('vggV1.h5', custom_objects=custom_objects)
 
 label_mapping = dict([(v, k) for k, v in test_generator.class_indices.items()])  # on associe chaque id à un label
 
