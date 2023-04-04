@@ -1,0 +1,82 @@
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #
+=================================================================
+ input_1 (InputLayer)        [(None, 150, 150, 3)]     0
+
+ block1_conv1 (Conv2D)       (None, 150, 150, 64)      1792
+
+ block1_conv2 (Conv2D)       (None, 150, 150, 64)      36928
+
+ block1_pool (MaxPooling2D)  (None, 75, 75, 64)        0
+
+ block2_conv1 (Conv2D)       (None, 75, 75, 128)       73856
+
+ block2_conv2 (Conv2D)       (None, 75, 75, 128)       147584
+
+ block2_pool (MaxPooling2D)  (None, 37, 37, 128)       0
+
+ block3_conv1 (Conv2D)       (None, 37, 37, 256)       295168
+
+ block3_conv2 (Conv2D)       (None, 37, 37, 256)       590080
+
+ block3_conv3 (Conv2D)       (None, 37, 37, 256)       590080
+
+ block3_pool (MaxPooling2D)  (None, 18, 18, 256)       0
+
+ block4_conv1 (Conv2D)       (None, 18, 18, 512)       1180160
+
+ block4_conv2 (Conv2D)       (None, 18, 18, 512)       2359808
+
+ block4_conv3 (Conv2D)       (None, 18, 18, 512)       2359808
+
+ block4_pool (MaxPooling2D)  (None, 9, 9, 512)         0
+
+ block5_conv1 (Conv2D)       (None, 9, 9, 512)         2359808
+
+ block5_conv2 (Conv2D)       (None, 9, 9, 512)         2359808
+
+ block5_conv3 (Conv2D)       (None, 9, 9, 512)         2359808
+
+ block5_pool (MaxPooling2D)  (None, 4, 4, 512)         0
+
+ flatten (Flatten)           (None, 8192)              0
+
+ dense (Dense)               (None, 512)               4194816
+
+ dropout (Dropout)           (None, 512)               0
+
+ dense_1 (Dense)             (None, 512)               262656
+
+ dropout_1 (Dropout)         (None, 512)               0
+
+ dense_2 (Dense)             (None, 53)                27189
+
+=================================================================
+Total params: 19,199,349
+Trainable params: 4,484,661
+Non-trainable params: 14,714,688
+_________________________________________________________________
+
+Epoch 1/15
+177/177 [==============================] - 632s 4s/step - loss: 2.7776 - accuracy: 0.2534 - val_loss: 1.8050 - val_accuracy: 0.4688
+Epoch 2/15
+177/177 [==============================] - 616s 3s/step - loss: 1.6594 - accuracy: 0.5117 - val_loss: 1.4272 - val_accuracy: 0.6042
+Epoch 3/15
+177/177 [==============================] - 653s 4s/step - loss: 1.1973 - accuracy: 0.6369 - val_loss: 1.0460 - val_accuracy: 0.6875
+Epoch 4/15
+177/177 [==============================] - 617s 3s/step - loss: 0.8780 - accuracy: 0.7307 - val_loss: 1.2320 - val_accuracy: 0.6250
+Epoch 5/15
+177/177 [==============================] - 646s 4s/step - loss: 0.7087 - accuracy: 0.7773 - val_loss: 0.9404 - val_accuracy: 0.6875
+Epoch 6/15
+177/177 [==============================] - 647s 4s/step - loss: 0.5297 - accuracy: 0.8301 - val_loss: 1.3092 - val_accuracy: 0.6458
+Epoch 7/15
+177/177 [==============================] - 644s 4s/step - loss: 0.4405 - accuracy: 0.8614 - val_loss: 1.5998 - val_accuracy: 0.6458
+Epoch 8/15
+177/177 [==============================] - 635s 4s/step - loss: 0.3801 - accuracy: 0.8790 - val_loss: 1.0154 - val_accuracy: 0.7396
+Epoch 9/15
+177/177 [==============================] - 624s 4s/step - loss: 0.3142 - accuracy: 0.8985 - val_loss: 1.4871 - val_accuracy: 0.6250
+Epoch 10/15
+177/177 [==============================] - 644s 4s/step - loss: 0.2843 - accuracy: 0.9119 - val_loss: 1.4968 - val_accuracy: 0.6250
+
+Process finished with exit code 0
