@@ -10,6 +10,8 @@ from sklearn.metrics import cohen_kappa_score, classification_report
 from pre_traitement import test_generator
 from keras.models import load_model
 import keras.utils as image
+from keras.preprocessing import image
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
 ''' Division du dossier DataSet en trois sous-ensembles  '''
 
@@ -77,8 +79,8 @@ for class_dir in os.listdir(dataset_dir):
 ''' Test et analyse des résultats'''
 
 ''' Pour VGG : '''
-# Load image test
 
+# Load image test
 img_path = []
 datatest_path = r"test"
 
@@ -90,9 +92,9 @@ for folder_name in os.listdir(datatest_path):
             img_path.append(os.path.join(folder_path, file))
 
 X_test = []
-for img in img_path:
-    img_test = image.load_img(img, target_size=(150, 150))
-    img_arr = image.img_to_array(img_test) / 255.0
+for img1 in img_path:
+    img_test = load_img(img1, target_size=(150, 150))
+    img_arr = img_to_array(img_test) / 255.0
     X_test.append(img_arr)
 
 X_test = np.array(X_test)
@@ -114,20 +116,22 @@ predictions = saved_model.predict(X_test)
 y_pred = np.argmax(predictions, axis=-1)
 y_pred_label = [label_mapping[int(prediction_id)] for prediction_id in y_pred]
 
+print('VGG16 architecture performance results:')
+print()
 # Compute the Cohen's kappa coefficient
 kappa = cohen_kappa_score(y_true, y_pred_label)
 # Print the kappa score
-print("Cohen's kappa coefficient: ", kappa)
+print("Cohen's kappa coefficient for the VGG16 architecture: ", kappa)
 print()
 
 # Print the classification report
-print("Results of the test set:")
+print("Classification report of the VGG16 architecture:")
 print(classification_report(y_true, y_pred_label))
 
 # Show each image with the prediction
 for i, img in enumerate(img_path):
-    img_test = image.load_img(img, target_size=(150, 150))
-    img_arr = image.img_to_array(img_test) / 255.0
+    img_test = load_img(img, target_size=(150, 150))
+    img_arr = img_to_array(img_test) / 255.0
     img_input = img_arr.reshape((1, img_arr.shape[0], img_arr.shape[1], img_arr.shape[2]))
 
     prediction_id = np.argmax(saved_model.predict(img_input), axis=-1)
@@ -154,9 +158,9 @@ for folder_name in os.listdir(datatest_path):
             img_path.append(os.path.join(folder_path, file))
 
 X_test = []
-for img in img_path:
-    img_test = image.load_img(img, target_size=(150, 150))
-    img_arr = image.img_to_array(img_test) / 255.0
+for img2 in img_path:
+    img_test = load_img(img2, target_size=(150, 150))
+    img_arr = img_to_array(img_test) / 255.0
     X_test.append(img_arr)
 
 X_test = np.array(X_test)
@@ -178,20 +182,22 @@ predictions = saved_model.predict(X_test)
 y_pred = np.argmax(predictions, axis=-1)
 y_pred_label = [label_mapping[int(prediction_id)] for prediction_id in y_pred]
 
+print('CNN architecture performance results:')
+print()
 # Compute the Cohen's kappa coefficient
 kappa = cohen_kappa_score(y_true, y_pred_label)
 # Print the kappa score
-print("Cohen's kappa coefficient: ", kappa)
+print("Cohen's kappa coefficient for the CNN architecture: ", kappa)
 print()
 
 # Print the classification report
-print("Results of the test set:")
+print("Classification report of the CNN architecture:")
 print(classification_report(y_true, y_pred_label))
 
 # Show each image with the prediction
 for i, img in enumerate(img_path):
-    img_test = image.load_img(img, target_size=(150, 150))
-    img_arr = image.img_to_array(img_test) / 255.0
+    img_test = load_img(img, target_size=(150, 150))
+    img_arr = img_to_array(img_test) / 255.0
     img_input = img_arr.reshape((1, img_arr.shape[0], img_arr.shape[1], img_arr.shape[2]))
 
     prediction_id = np.argmax(saved_model.predict(img_input), axis=-1)
